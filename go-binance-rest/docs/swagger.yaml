@@ -1,0 +1,550 @@
+basePath: /api
+definitions:
+  github_com_hoangtm1601_go-binance-rest_internal_models.CandleInterval:
+    enum:
+    - 1min
+    - 5min
+    - 15min
+    - 30min
+    - 60min
+    - 240min
+    - 720min
+    - 1440min
+    type: string
+    x-enum-varnames:
+    - OneMin
+    - FiveMin
+    - FifteenMin
+    - ThirtyMin
+    - SixtyMin
+    - TwoFortyMin
+    - SevenTwentyMin
+    - FourteenFortyMin
+  github_com_hoangtm1601_go-binance-rest_internal_models.Transaction:
+    properties:
+      amount:
+        type: number
+      createdAt:
+        type: string
+      currency:
+        default: USD
+        type: string
+      deletedAt:
+        $ref: '#/definitions/gorm.DeletedAt'
+      id:
+        type: integer
+      status:
+        $ref: '#/definitions/github_com_hoangtm1601_go-binance-rest_internal_models.TransactionStatus'
+      transactionDate:
+        type: string
+      type:
+        $ref: '#/definitions/github_com_hoangtm1601_go-binance-rest_internal_models.TransactionType'
+      updatedAt:
+        type: string
+      userId:
+        type: integer
+    type: object
+  github_com_hoangtm1601_go-binance-rest_internal_models.TransactionStatus:
+    enum:
+    - Failed
+    - Succeeded
+    type: string
+    x-enum-varnames:
+    - Failed
+    - Succeeded
+  github_com_hoangtm1601_go-binance-rest_internal_models.TransactionType:
+    enum:
+    - charge
+    - refund
+    type: string
+    x-enum-varnames:
+    - Charge
+    - Refund
+  github_com_hoangtm1601_go-binance-rest_internal_models_dto.CandleResponseDTO:
+    properties:
+      bv:
+        type: number
+      cl:
+        type: number
+      cnt:
+        type: integer
+      end:
+        type: integer
+      hi:
+        type: number
+      interval:
+        $ref: '#/definitions/github_com_hoangtm1601_go-binance-rest_internal_models.CandleInterval'
+      lastEnd:
+        type: integer
+      lo:
+        type: number
+      op:
+        type: number
+      qv:
+        type: number
+      start:
+        type: integer
+      symbol:
+        type: string
+      tbv:
+        type: number
+      tqv:
+        type: number
+    type: object
+  github_com_hoangtm1601_go-binance-rest_internal_models_dto.CandleWithIndicators:
+    properties:
+      candle:
+        $ref: '#/definitions/github_com_hoangtm1601_go-binance-rest_internal_models_dto.CandleResponseDTO'
+      indicators:
+        $ref: '#/definitions/github_com_hoangtm1601_go-binance-rest_internal_models_dto.IndicatorResult'
+    type: object
+  github_com_hoangtm1601_go-binance-rest_internal_models_dto.CreateTransactionDTO:
+    properties:
+      amount:
+        type: number
+      currency:
+        type: string
+    required:
+    - amount
+    - currency
+    type: object
+  github_com_hoangtm1601_go-binance-rest_internal_models_dto.ErrorResponse:
+    properties:
+      error:
+        type: string
+    type: object
+  github_com_hoangtm1601_go-binance-rest_internal_models_dto.IndexTransactionsResponseDTO:
+    properties:
+      pagination:
+        $ref: '#/definitions/github_com_hoangtm1601_go-binance-rest_internal_models_dto.PaginationMetadataDTO'
+      transactions:
+        items:
+          $ref: '#/definitions/github_com_hoangtm1601_go-binance-rest_internal_models.Transaction'
+        type: array
+    type: object
+  github_com_hoangtm1601_go-binance-rest_internal_models_dto.IndicatorResult:
+    properties:
+      bollingerLower:
+        type: number
+      bollingerMiddle:
+        type: number
+      bollingerUpper:
+        type: number
+      dema:
+        type: number
+      macd:
+        type: number
+      rsi:
+        type: number
+      signal:
+        type: number
+      sma:
+        type: number
+      stochasticD:
+        type: number
+      stochasticK:
+        type: number
+    type: object
+  github_com_hoangtm1601_go-binance-rest_internal_models_dto.PaginationMetadataDTO:
+    properties:
+      page:
+        type: integer
+      per_page:
+        type: integer
+      total:
+        type: integer
+    type: object
+  github_com_hoangtm1601_go-binance-rest_internal_models_dto.SignInInput:
+    properties:
+      email:
+        example: admin@gmail.com
+        type: string
+      password:
+        example: 123456@Abc
+        type: string
+    required:
+    - email
+    - password
+    type: object
+  github_com_hoangtm1601_go-binance-rest_internal_models_dto.SignUpInput:
+    properties:
+      email:
+        example: admin@gmail.com
+        type: string
+      name:
+        example: admin
+        type: string
+      password:
+        example: 123456@Abc
+        minLength: 8
+        type: string
+      passwordConfirm:
+        example: 123456@Abc
+        type: string
+      photo:
+        type: string
+    required:
+    - email
+    - name
+    - password
+    - passwordConfirm
+    - photo
+    type: object
+  github_com_hoangtm1601_go-binance-rest_internal_models_dto.TransactionResponseDTO:
+    properties:
+      amount:
+        type: number
+      currency:
+        type: string
+      id:
+        type: integer
+      status:
+        $ref: '#/definitions/github_com_hoangtm1601_go-binance-rest_internal_models.TransactionStatus'
+      transaction_date:
+        type: string
+      type:
+        $ref: '#/definitions/github_com_hoangtm1601_go-binance-rest_internal_models.TransactionType'
+      user_id:
+        type: integer
+    type: object
+  github_com_hoangtm1601_go-binance-rest_internal_models_dto.UserListResponse:
+    properties:
+      total:
+        type: integer
+      users:
+        items:
+          $ref: '#/definitions/github_com_hoangtm1601_go-binance-rest_internal_models_dto.UserResponse'
+        type: array
+    type: object
+  github_com_hoangtm1601_go-binance-rest_internal_models_dto.UserResponse:
+    properties:
+      created_at:
+        type: string
+      email:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      photo:
+        type: string
+      provider:
+        type: string
+      role:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  gorm.DeletedAt:
+    properties:
+      time:
+        type: string
+      valid:
+        description: Valid is true if Time is not NULL
+        type: boolean
+    type: object
+host: localhost:8000
+info:
+  contact: {}
+  description: This is authentication golang server.
+  title: Swagger Authentication API
+  version: "1.0"
+paths:
+  /auth/login:
+    post:
+      consumes:
+      - application/json
+      description: SignInUser
+      parameters:
+      - description: Login payload
+        in: body
+        name: payload
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_hoangtm1601_go-binance-rest_internal_models_dto.SignInInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: SignInUser
+      tags:
+      - auth
+  /auth/refresh:
+    get:
+      consumes:
+      - application/json
+      description: RefreshAccessToken
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: RefreshAccessToken
+      tags:
+      - auth
+  /auth/register:
+    post:
+      consumes:
+      - application/json
+      description: SignUpUser
+      parameters:
+      - description: Register payload
+        in: body
+        name: payload
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_hoangtm1601_go-binance-rest_internal_models_dto.SignUpInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_hoangtm1601_go-binance-rest_internal_models_dto.UserResponse'
+      summary: SignUpUser
+      tags:
+      - auth
+  /candles/indicators:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve candles with calculated indicators for a given time range
+        and symbol
+      parameters:
+      - example: "2024-09-25T00:00:00Z"
+        in: query
+        name: end_date
+        required: true
+        type: string
+      - enum:
+        - 1min
+        - 5min
+        - 15min
+        - 30min
+        - 60min
+        - 240min
+        - 720min
+        - 1440min
+        example: 1min
+        in: query
+        name: interval
+        required: true
+        type: string
+        x-enum-varnames:
+        - OneMin
+        - FiveMin
+        - FifteenMin
+        - ThirtyMin
+        - SixtyMin
+        - TwoFortyMin
+        - SevenTwentyMin
+        - FourteenFortyMin
+      - example: 15
+        in: query
+        maximum: 200
+        minimum: 1
+        name: period
+        required: true
+        type: integer
+      - example: "2024-09-20T00:00:00Z"
+        in: query
+        name: start_date
+        required: true
+        type: string
+      - example: BTCUSDT
+        in: query
+        name: symbol
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/github_com_hoangtm1601_go-binance-rest_internal_models_dto.CandleWithIndicators'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/github_com_hoangtm1601_go-binance-rest_internal_models_dto.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/github_com_hoangtm1601_go-binance-rest_internal_models_dto.ErrorResponse'
+      security:
+      - Bearer: []
+      summary: Get candles with indicators
+      tags:
+      - candles
+  /payments:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve a paginated list of payment transactions for the current
+        user
+      parameters:
+      - default: 1
+        example: 1
+        in: query
+        name: page
+        type: integer
+      - default: 10
+        example: 5
+        in: query
+        name: perPage
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_hoangtm1601_go-binance-rest_internal_models_dto.IndexTransactionsResponseDTO'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/github_com_hoangtm1601_go-binance-rest_internal_models_dto.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/github_com_hoangtm1601_go-binance-rest_internal_models_dto.ErrorResponse'
+      security:
+      - Bearer: []
+      summary: List user payments
+      tags:
+      - payments
+    post:
+      consumes:
+      - application/json
+      description: Create a new payment transaction for the current user
+      parameters:
+      - description: CreatePayment payload
+        in: body
+        name: payload
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_hoangtm1601_go-binance-rest_internal_models_dto.CreateTransactionDTO'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_hoangtm1601_go-binance-rest_internal_models_dto.TransactionResponseDTO'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/github_com_hoangtm1601_go-binance-rest_internal_models_dto.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/github_com_hoangtm1601_go-binance-rest_internal_models_dto.ErrorResponse'
+      security:
+      - Bearer: []
+      summary: Create a new payment
+      tags:
+      - payments
+  /users/{id}:
+    get:
+      consumes:
+      - application/json
+      description: GetUser
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_hoangtm1601_go-binance-rest_internal_models_dto.UserResponse'
+        "500":
+          description: an error occurred during the modification
+          schema:
+            type: string
+      security:
+      - Bearer: []
+      summary: GetUser
+      tags:
+      - users
+  /users/list:
+    get:
+      consumes:
+      - application/json
+      description: ListUsers
+      parameters:
+      - in: query
+        name: email
+        type: string
+      - in: query
+        name: name
+        type: string
+      - in: query
+        name: provider
+        type: string
+      - in: query
+        name: role
+        type: string
+      - default: 1
+        example: 1
+        in: query
+        name: page
+        type: integer
+      - default: 10
+        example: 5
+        in: query
+        name: perPage
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_hoangtm1601_go-binance-rest_internal_models_dto.UserListResponse'
+      security:
+      - Bearer: []
+      summary: ListUsers
+      tags:
+      - users
+  /users/me:
+    get:
+      consumes:
+      - application/json
+      description: GetMe
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_hoangtm1601_go-binance-rest_internal_models_dto.UserResponse'
+        "500":
+          description: an error occurred during the modification
+          schema:
+            type: string
+      security:
+      - Bearer: []
+      summary: GetMe
+      tags:
+      - users
+securityDefinitions:
+  BasicAuth:
+    type: basic
+  Bearer:
+    description: Type "Bearer" followed by a space and JWT token.
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
