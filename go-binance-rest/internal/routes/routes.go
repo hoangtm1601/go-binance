@@ -58,6 +58,6 @@ func SetupRoutes(server *gin.Engine, db *gorm.DB) {
 	paymentRoutes := router.Group("payments").Use(middleware.AuthMiddleware())
 	{
 		paymentRoutes.POST("/", paymentController.CreatePayment)
-		paymentRoutes.GET("/", middleware.BindPagination(), paymentController.IndexPayment)
+		paymentRoutes.GET("/", middleware.CacheMiddleware(30*time.Second), middleware.BindPagination(), paymentController.IndexPayment)
 	}
 }
