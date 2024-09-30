@@ -57,7 +57,7 @@ func (s *PaymentService) CreatePayment(userId uint, payload *dto.CreateTransacti
 			return createTxErr
 		}
 
-		updateErr := tx.Model(&models.User{}).Where("id = ?", userId).Update("role", models.FREE).Error
+		updateErr := tx.Model(&models.User{}).Where("id = ?", userId).Update("role", models.PAID).Error
 
 		if updateErr != nil {
 			return updateErr

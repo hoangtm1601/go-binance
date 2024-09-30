@@ -48,7 +48,7 @@ func SetupRoutes(server *gin.Engine, db *gorm.DB) {
 
 	candleRoutes := router.Group("candles").Use(middleware.AuthMiddleware())
 	{
-		candleRoutes.GET("/indicators", middleware.CacheMiddleware(30*time.Second), middleware.RequireRole(string(models.PAID)), candleController.GetCandlesWithIndicators)
+		candleRoutes.GET("/indicators", middleware.CacheMiddleware(30*time.Second), middleware.RequireRole(string(models.PAID), middleware.ADMIN), candleController.GetCandlesWithIndicators)
 	}
 
 	transactionRepo := repositories.NewTransactionRepository(db)

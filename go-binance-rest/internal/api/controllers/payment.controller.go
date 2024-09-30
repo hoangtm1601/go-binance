@@ -66,7 +66,7 @@ func (pc *PaymentController) CreatePayment(ctx *gin.Context) {
 // @Router /payments [get]
 func (pc *PaymentController) IndexPayment(ctx *gin.Context) {
 	pagination := ctx.MustGet(middleware.Pagination).(*dto.PaginationDto)
-	currentUser := ctx.MustGet(middleware.CurrentUser).(*models.User)
+	currentUser := ctx.MustGet(middleware.CurrentUser).(models.User)
 	transactions, total, err := pc.service.UserIndexPayment(currentUser.ID, pagination)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
